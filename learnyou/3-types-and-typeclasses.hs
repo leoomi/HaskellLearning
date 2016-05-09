@@ -32,3 +32,6 @@ reverseColourOrder =  reverse [(Red)..(Violet)]
  - Hint: Integer division can be performed with the quot function: quot 7 2 = 3
  -}
 paintMix c1 c2 = [(Red)..(Violet)] !! ((((length[(Red)..c1]) + (length[(Red)..c2])) `quot` 2) - 1)
+
+-- Wanted to use ceiling fuction instead of quot for acquiring the higher value to get an average, but was getting a lot of errors. Decided to do everything in reverse to get the wanted result, but it's a little weird
+paintMix' c1 c2 = reverseColourOrder !! (((7 - length[(Red)..c1]) + (7 - length[(Red)..c2])) `quot` 2)
