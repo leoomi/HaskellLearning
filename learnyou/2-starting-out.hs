@@ -33,7 +33,11 @@ duplicate xs = concat [x:[x] | x <- xs]
  - The function "min x y" returns the lower of values x and y
  - For example "ziplike [1,2,3] ['a', 'b', 'c', 'd']" returns [(1,'a'), (2, 'b'), (3, 'c')]
  -}
-ziplike xs ys = undefined 
+ziplike xs ys = [[(x,y) | x<-xs, y<-ys] !! z | z <- [0,(length ys + 1)..]]
+
+zip' [] _ = []
+zip' _ [] = []
+zip' (xs:x) (ys:y) = (xs, ys) : (zip' x y)
 
 -- Split a list l at element k into a tuple: The first part up to and including k, the second part after k
 -- For example "splitAtIndex 3 [1,1,1,2,2,2]" returns ([1,1,1],[2,2,2])
@@ -49,8 +53,8 @@ slice i k l = reverse (drop (k - i) (reverse (drop i l)))
 
 -- Insert element x in list l at index k
 -- For example, "insertElem 2 5 [0,0,0,0,0,0]" returns [0,0,0,0,0,2,0]
-insertElem x k l = undefined
+insertElem x k l = (take k l) ++ [x] ++ (drop k l)
 
 -- Rotate list l n places left.
 -- For example, "rotate 2 [1,2,3,4,5]" gives [3,4,5,1,2]
-rotate n l = undefined
+rotate n l = (drop n l) ++ (take n l)
