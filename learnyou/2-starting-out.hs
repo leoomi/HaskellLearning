@@ -33,7 +33,9 @@ duplicate xs = concat [x:[x] | x <- xs]
  - The function "min x y" returns the lower of values x and y
  - For example "ziplike [1,2,3] ['a', 'b', 'c', 'd']" returns [(1,'a'), (2, 'b'), (3, 'c')]
  -}
-ziplike xs ys = [[(x,y) | x<-xs, y<-ys] !! z | z <- [0,(length ys + 1)..]]
+ziplike xs ys = [[(x,y) | x<-xs, y<-ys] !! z | z <- [0,step..max]]      --Not really done in one line, but it's "less ureadable"
+  where step = length ys + 1
+        max = min ((length xs)*(length ys) -1) (((min (length xs) (length ys))-1)*step)
 
 zip' [] _ = []
 zip' _ [] = []
