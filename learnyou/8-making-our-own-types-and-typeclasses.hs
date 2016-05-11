@@ -11,14 +11,18 @@
  -
  - Uncomment the following declarations to complete the implementation, and provide an implementation for instance Show Card
  -}
+data Suit = Clubs | Hearts | Diamonds | Spades
+     deriving(Show, Eq)
+data Digit = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack | Queen | King | Ace
+     deriving(Show, Eq, Enum, Ord)
+data Card = Card Digit Suit deriving (Eq)
 
---data Suit = 
---data Digit = 
---data Card = 
+instance Show Card where
+     show (Card d s) = show ("The " ++ (show d) ++ " of " ++ (show s))
 
 -- We should be able to provide a function which returns the higher ranked card:
 betterCard :: Card -> Card -> Card
-betterCard x y = undefined
+betterCard (Card d1 s1 ) (Card d2 s2 ) = (if d1 >= d2 then (Card d1 s1) else (Card d2 s2))
 
 -- Here is a new Typeclass, which represents some kind of playing hand in a game.
 -- It returns True for a "winning hand", depending on the rules for the type of class we are playing with
@@ -27,13 +31,15 @@ class Hand a where
 
 -- Implement Hand for Card, where play returns true if the list contains the Ace of Spades
 instance Hand Card where
-    play c = undefined
+    play c = (Card Ace Spades) `elem` c
 
 -- Create a new Coin type
---data Coin = 
+data Coin = Heads | Tails
 
 -- Implement Hand for Coin, where play returns true if there are ten heads in a row in the list
 instance Hand Coin where
-	play c =  undefined
-
+    play c = case c of
+                      [] -> False
+                      (Heads:Heads:Heads:Heads:Heads:Heads:Heads:Heads:Heads:Heads:_) -> True -- for the lulz
+                      (_:xs) -> play xs
 -- Have a play with implementing Hand for some other types, for instance Int and Bool
